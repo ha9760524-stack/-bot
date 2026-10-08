@@ -19,26 +19,26 @@ app = Flask(__name__)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "مرحباً بك! يرجى إرسال رمز الاشتراك الخاص بك لتفعيل كورسات التداول.")
+    bot.reply_to(message, "أهلاً بك لتفعيل كورسات التداول")
 
 @bot.message_handler(func=lambda message: True)
 def check_code(message):
     user_code = message.text.strip()
     
     if user_code in YEAR_CODES or user_code in MONTH_CODES:
-        bot.reply_to(message, "✅ تم تفعيل الاشتراك بنجاح!")
-        bot.send_message(message.chat.id, "📈 **الكورس الأول:** التحليل الفني الأساسي والمتقدم.")
-        bot.send_message(message.chat.id, "🎯 **الكورس الثاني:** استراتيجيات الدخول والخروج في الصفقات.")
+        bot.reply_to(message, "✅ تم تفعيل الاشتراك بنجاح")
+        bot.send_message(message.chat.id, "📈 **المقدمة والكورس الأول:** خطوة بخطوة نحو الاحتراف.")
+        bot.send_message(message.chat.id, "🎯 **تعليمات القنوات:** قواعد هامة لضمان العمل والسوق تماماً.")
         
         course_3_text = (
-            "📉 **الكورس الثالث:** شرح القمم والقعمان والارتدادات **خطوة بخطوة**.\n\n"
-            "⚠️ ملاحظة هامة: هذه النقاط مجرد أدوات، ولكن الأهم هو أن تكون فاهمًا لطريقة العمل والسوق تمامًا.\n"
-            "هذا الكورس مصمم بعناية ليشرح لك كل ما فاتك لتبدأ بقوة.\n\n"
-            "للتواصل مع المشرف ومتابعة أي استفسار 👈 @Trz179"
+            "📉 **الكورس الثالث:** شرح الارتدادات خطوة بخطوة.\n\n"
+            "هذه النقاط مجرد أدوات، ولكن الأهم أن تكون فهماً لطريقة العمل والسوق تماماً ⚠️\n\n"
+            "هذا الكود تم تجهيزه بعناية ليشرح لك كل ما فاتك لتبدأ بقوة.\n\n"
+            "للتواصل مع المشرف ومتابعة أي استفسار 👇"
         )
-        bot.send_message(message.chat.id, course_3_text, parse_mode="Markdown")
+        bot.send_message(message.chat.id, course_3_text)
     else:
-        bot.reply_to(message, "❌ رمز غير صحيح. يرجى التحقق من الكود وإعادة المحاولة.")
+        bot.reply_to(message, "❌ رمز غير صحيح، يرجى التحقق وإعادة المحاولة.")
 
 @app.route(f'/{TOKEN}', methods=['POST'])
 def webhook():
