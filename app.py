@@ -2,44 +2,43 @@ import os
 from flask import Flask, request
 import telebot
 
-TOKEN = os.environ.get('BOT_TOKEN', 'ضع_توكن_البوت_هنا')
+TOKEN = os.environ.get('BOT_TOKEN', 'موت_هنا')
 bot = telebot.TeleBot(TOKEN)
 
 YEAR_CODES = [
-    "Hjk2356j", "455hnm0", "Zx5091oy", "bcc549hj7", "995ghj4",
-    "Gak1018uq", "Ui20067ytr", "2300gasnq", "Ytr81005dfy", "541hgatr8"
+    "Hjk2356j", "455hnm0", "Zx5091oy", "bcc",
+    "Gak1018uq", "Ui20067ytr", "2300gasnq"
 ]
 
 MONTH_CODES = [
-    "Jn6021sak", "000gawlbv", "34g34kjaer", "1515gvzx23",
-    "5qoognmay", "Q232bnou5", "jjnb491300", "Rth402155"
+    "Jn6021sak", "000gawlbv", "34g34kjaer",
+    "5qoognmay", "Q232bnou5", "jjnb491300"
 ]
 
 app = Flask(__name__)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "أهلاً بك في بوت اشتراكات كورسات التداول 📉.\nالرجاء إرسال كود الاشتراك الخاص بك لتفعيل الخدمة واستلام جميع الكورسات.")
+    bot.reply_to(message, "مرحباً بك! يرجى إرسال رمز الاشتراك الخاص بك لتفعيل كورسات التداول.")
 
 @bot.message_handler(func=lambda message: True)
 def check_code(message):
     user_code = message.text.strip()
     
     if user_code in YEAR_CODES or user_code in MONTH_CODES:
-        bot.reply_to(message, "✅ **تم تفعيل الاشتراك بنجاح!**\nإليك محتوى الكورسات والشروحات الخاصة بك 📊:", parse_mode='Markdown')
-        
-        bot.send_message(message.chat.id, "📈 **الكورس الأول: شرح التحليل الفني**")
-        bot.send_message(message.chat.id, "🎯 **الكورس الثاني: شرح نقطة دخول لصفقات**")
+        bot.reply_to(message, "✅ تم تفعيل الاشتراك بنجاح!")
+        bot.send_message(message.chat.id, "📈 **الكورس الأول:** التحليل الفني الأساسي والمتقدم.")
+        bot.send_message(message.chat.id, "🎯 **الكورس الثاني:** استراتيجيات الدخول والخروج في الصفقات.")
         
         course_3_text = (
-            "📉 **الكورس الثالث: شرح القمم والقيعان والارتدادات**\n\n"
-            "‼️ يا خوان أعرف لسوق سمارتي فقط، بس أهم شي إنك فاهم طريقة الكورسات، "
-            "وإذا ما فهمتها تواصل مع المشرف يشرح لك اللي ما فهمته، أهم شي إنك تتعلم.\n\n"
-            "للتواصل مع المشرف 👈🏻 @Trz179"
+            "📉 **الكورس الثالث:** شرح القمم والقعمان والارتدادات **خطوة بخطوة**.\n\n"
+            "⚠️ ملاحظة هامة: هذه النقاط مجرد أدوات، ولكن الأهم هو أن تكون فاهمًا لطريقة العمل والسوق تمامًا.\n"
+            "هذا الكورس مصمم بعناية ليشرح لك كل ما فاتك لتبدأ بقوة.\n\n"
+            "للتواصل مع المشرف ومتابعة أي استفسار 👈 @Trz179"
         )
-        bot.send_message(message.chat.id, course_3_text, parse_mode='Markdown')
+        bot.send_message(message.chat.id, course_3_text, parse_mode="Markdown")
     else:
-        bot.reply_to(message, "❌ **الكود غير صحيح أو منتهي.** تأكد من الكود وأعد محاولة إرساله بشكل صحيح.", parse_mode='Markdown')
+        bot.reply_to(message, "❌ رمز غير صحيح. يرجى التحقق من الكود وإعادة المحاولة.")
 
 @app.route(f'/{TOKEN}', methods=['POST'])
 def webhook():
